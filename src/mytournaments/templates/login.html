@@ -1,16 +1,59 @@
-<!DOCTYPE html>
 <html>
-<head>
-    <title>Login Page</title>
-</head>
-<body>
-    <form action="/login" method="POST">
-        <p>Enter Username:</p>
-        <p><input type="text" name="username"></p>
-        <p>Enter Password:</p>
-        <p><input type="password" name="password"></p>
+    <head>
+        <title>MyTournaments</title>
+        <meta name="author" content="Salvatore Pocobelli & Francesco Cappetti">
+        <meta name="viewport" content="width-device-width, initial-scale-1">
+        <meta name="lenguage" content="english">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+    </head>
 
-        <p><input type="submit" value="Submit"></p>
-    </form>
-</body>
+    <body>
+        <div id="menu">
+            <a href="/"><img src="" id="logo"></a>
+            <div id="sezioni">
+                <a href="index.html"><div class="sezione" >HOME</div></a>
+                <a href="tornei.html"><div class="sezione">TORNEI</div></a>
+                <a href="chi siamo.html"><div class="sezione" >CHI SIAMO</div></a>
+                <a href="accedi.html"><div class="sezione" id="corrente">ACCEDI</div></a>
+                <a href="registrati.html"><div class="sezione">REGISTRATI</div></a>
+            </div>
+        </div>
+
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+
+            <div class="container">
+                <label><b>{{ form.email.label() }}</b></label>
+                {% if form.email.errors %}
+                    {{ form.email() }}
+                    {% for error in form.email.errors %}
+                        <p style="color:red;">{{ error }}</p>
+                    {% endfor %}
+                {% else %}
+                    {{ form.email() }}
+                {% endif %}
+            
+                <br>
+                
+                <label><b>{{ form.password.label() }}</b></label>
+                {% if form.password.errors %}
+                    {{ form.password() }}
+                    {% for error in form.password.errors %}
+                        <p style="color:red;">{{ error }}</p>
+                    {% endfor %}
+                {% else %}
+                    {{ form.password() }}
+                {% endif %}
+
+                <br>
+
+                {{ form.remember() }}
+                {{ form.remember.label() }}
+
+                <br><br><button type="submit">{{ form.submit.label() }}</button>
+            </div>
+        </form>
+    </body>
 </html>

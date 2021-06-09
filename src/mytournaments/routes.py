@@ -1,5 +1,6 @@
-from flask import render_template, redirect, url_for, request
+from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user, login_required, current_user
+from mytournaments.forms import RegistrationForm, LoginForm
 from mytournaments.models import User
 from mytournaments import app, db, bcrypt
 
@@ -11,45 +12,50 @@ def index():
 
 @app.route('/register', methods=('GET', 'POST'))
 def register():
-    if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
-        email = request.form.get('email')
+    if current_user.is_authenticated:
+        flash('You have already logged in.', 'warning')
 
-        if all([username, password, email]):
-            if User.query.filter_by(username=username).first() or User.query.filter_by(email=email).first():
-                return '<h1>Username or email already used.</h1>'
-            
-            hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-            user = User(username=username, email=email, password=hashed_password)
-            db.session.add(user)
-            db.session.commit()
+        return redirect(url_for('index'))
+    
+    form = RegistrationForm()
 
-            return redirect(url_for('login'))
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+        db.session.add(user)
+        db.session.commit()
 
-        return '<h1>All fields are required.</h1>'
+        flash('Your account has been created! You are now able to log in.', 'success')
 
-    return render_template('register.html')
+        return redirect(url_for('login'))
+
+    return render_template('register.html', title='Register', form=form)
 
 
 @app.route('/login', methods=('GET', 'POST'))
 def login():
-    if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
+    if current_user.is_authenticated:
+        flash('You have already logged in.', 'warning')
 
-        user = User.query.filter_by(username=username).first()
+        return redirect(url_for('index'))
 
-        if user and bcrypt.check_password_hash(user.password, password):
-            login_user(user, remember=True)
+    form = LoginForm()
 
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
 
-            return redirect(next_page) if next_page is not None else redirect(url_for('dashboard'))
+            flash('You have logged in.', 'success')
+            
+            return redirect(next_page) if next_page else redirect(url_for('index'))
         
-        return '<h1>Invalid credentials. Please try again.</h1>'
-    
-    return render_template('login.html')
+        else:
+            flash('Login Unsuccessful. Please check email and password.', 'danger')
+
+    return render_template('login.html', title='Login', form=form)
 
 
 @app.route('/logout')
