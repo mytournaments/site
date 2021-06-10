@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, DateTimeField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from mytournaments.models import User
 
@@ -25,3 +25,11 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired(), Length(min=8)], render_kw={'placeholder': 'Enter Password'})
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
+
+
+class TournamentForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired(), Length(max=30)], render_kw={'placeholder': 'Enter Title'})
+    description = StringField('Description', validators=[DataRequired(), Length(max=700)], render_kw={'placeholder': 'Enter Description'})
+    game = StringField('Game', validators=[DataRequired(), Length(max=20)], render_kw={'placeholder': 'Enter Game'})
+    # datetime = DateTimeField('Date & Time', validators=[DataRequired()])
+    submit = SubmitField('Create Tournament')
