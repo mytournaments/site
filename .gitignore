@@ -2,4 +2,4 @@
 venv/
 
 src/mytournaments/__pycache__/
-src/mytournaments/users.db
+src/mytournaments/site.db
