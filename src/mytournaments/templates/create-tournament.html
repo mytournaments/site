@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="POST" action="">
+    {{ form.hidden_tag() }}
+
+    <div class="container">
+        <label><b>{{ form.title.label() }}</b></label>
+        {% if form.title.errors %}
+            {{ form.title() }}
+            {% for error in form.title.errors %}
+                <p style="color:red;">{{ error }}</p>
+            {% endfor %}
+        {% else %}
+            {{ form.title() }}
+        {% endif %}
+    
+        <br>
+
+        <label><b>{{ form.description.label() }}</b></label>
+        {% if form.description.errors %}
+            {{ form.description() }}
+            {% for error in form.description.errors %}
+                <p style="color:red;">{{ error }}</p>
+            {% endfor %}
+        {% else %}
+            {{ form.description() }}
+        {% endif %}
+
+        <br>
+
+        <label><b>{{ form.game.label() }}</b></label>
+        {% if form.game.errors %}
+            {{ form.game() }}
+            {% for error in form.game.errors %}
+                <p style="color:red;">{{ error }}</p>
+            {% endfor %}
+        {% else %}
+            {{ form.game() }}
+        {% endif %}
+
+        <br>
+
+        <!--
+        <label><b>{{ form.start_date.label() }}</b></label>
+        {% if form.start_date.errors %}
+            {{ form.start_date(class='datepicker') }}
+            {% for error in form.start_date.errors %}
+                <p style="color:red;">{{ error }}</p>
+            {% endfor %}
+        {% else %}
+            {{ form.start_date(class='datepicker') }}
+        {% endif %}
+
+        <br>
+        -->
+        
+        <button type="submit">{{ form.submit.label() }}</button>
+    </div>
+</form>
+{% endblock content %}

@@ -7,7 +7,7 @@ from mytournaments import app, db, bcrypt
 
 @app.route('/')
 def index():
-    return '<h1>Hello World!</h1>'
+    return render_template('index.html')
 
 
 @app.route('/register', methods=('GET', 'POST'))
@@ -25,7 +25,7 @@ def register():
         db.session.add(user)
         db.session.commit()
 
-        flash('Your account has been created! You are now able to log in.', 'success')
+        flash('Your account has been created!', 'success')
 
         return redirect(url_for('login'))
 
@@ -53,7 +53,7 @@ def login():
             return redirect(next_page) if next_page else redirect(url_for('index'))
         
         else:
-            flash('Login Unsuccessful. Please check email and password.', 'danger')
+            flash('Login Unsuccessful. Please check email and password.', 'error')
 
     return render_template('login.html', title='Login', form=form)
 
@@ -61,6 +61,8 @@ def login():
 @app.route('/logout')
 def logout():
     logout_user()
+
+    flash('You have successfully logged out.')
 
     return redirect(url_for('login'))
 
@@ -71,9 +73,9 @@ def dashboard():
     return f'<h1>Welcome back {current_user.username}!</h1>'
 
 
-@app.route('/tournament', methods=('GET', 'POST'))
+@app.route('/create-tournament', methods=('GET', 'POST'))
 @login_required
-def tournament():
+def create_tournament():
     form = TournamentForm()
 
     if form.validate_on_submit():
@@ -81,8 +83,13 @@ def tournament():
         db.session.add(tournament)
         db.session.commit()
 
-        flash('You have successfully created a new tournament.')
+        flash('You have successfully created a new tournament.', 'success')
         
         return redirect(url_for('index'))
 
-    return render_template('tournament.html', form=form)
+    return render_template('create-tournament.html', form=form)
+
+
+@app.route('/tournaments')
+def tournaments():
+    return render_template('tournaments.html', tournaments=Tournament.query.all())

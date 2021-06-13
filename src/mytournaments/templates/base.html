@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MyTournaments</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap">
+</head>
+<body>
+    <div id="menu">
+        <a href="/"><img src="" id="logo"></a>
+        <div id="sezioni">
+            <a href="/"><div class="sezione">HOME</div></a>
+            <a href="/tournaments"><div class="sezione">TOURNAMENTS</div></a>
+            <a href="/about"><div class="sezione">ABOUT US</div></a>
+
+            {% if current_user.is_authenticated %}
+                <a href="/logout"><div class="sezione">LOGOUT</div></a>
+            {% else %}
+                <a href="/login"><div class="sezione">LOGIN</div></a>
+                <a href="/register"><div class="sezione">REGISTER</div></a>
+            {% endif %}
+        </div>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <p class='alert-{{ category }}'>{{ message }}</p><br>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock content %}
+</body>
+</html>
