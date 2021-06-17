@@ -62,15 +62,15 @@ def login():
 def logout():
     logout_user()
 
-    flash('You have successfully logged out.')
+    flash('You have successfully logged out.', 'success')
 
     return redirect(url_for('login'))
 
 
-@app.route('/dashboard')
+@app.route('/account')
 @login_required
-def dashboard():
-    return f'<h1>Welcome back {current_user.username}!</h1>'
+def account():
+    return render_template('account.html')
 
 
 @app.route('/create-tournament', methods=('GET', 'POST'))
@@ -85,7 +85,7 @@ def create_tournament():
 
         flash('You have successfully created a new tournament.', 'success')
         
-        return redirect(url_for('index'))
+        return redirect(url_for('account'))
 
     return render_template('create-tournament.html', form=form)
 

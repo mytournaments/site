@@ -1,5 +1,28 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Hello World!</h1>
+<div id="corpo">
+    <div class="card">
+        <p class="title-card">TORNEI ONLINE PER PRINCIPIANTI</p>
+        <p class="subtitle">Competi in tornei gratuiti o a pagamento x giocatori inesperti</p>
+        <a href="/tournaments"><img src="{{ url_for('static', filename='img/index/torneiprincipianti.jpg.png') }}" class="img-card" ></a>
+    </div>
+    <div class="card">
+        <p class="title-card">TORNEI X TUTTE LE PIATTAFORME</p>
+        <p class="subtitle">Competi in tornei gratuiti o a pagamento x tutte le piattaforme</p>
+        <a href="/tournaments"><img src="{{ url_for('static', filename='img/index/ps4-pc-xboxone.jpg.png') }}" class="img-card" ></a>
+    </div>
+    <div class="card">
+        <p class="title-card">TORNEI DI VIDEOGIOCHI FAMOSI</p>
+        <p class="subtitle">Competi in tornei gratuiti o a pagamento di tutti i videogiochi</p>
+        <a href="/tournaments"><img src="{{ url_for('static', filename='img/index/warzonecard.png') }}" class="img-card" ></a>
+    </div>
+</div>
+
+<a href="/tournaments">
+    <div id="spiegazione">
+        MyTournaments è il sito adatto a tutti i videogiocatori. <br> Competi in un torneo, oppure crea il tuo torneo.
+    </div>
+</a>
+<a href="/"><div id="contattaci">CONTATTACI</div></a>
 {% endblock content %}
