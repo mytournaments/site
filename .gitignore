@@ -4,4 +4,6 @@ venv/
 .env
 
 mytournaments/__pycache__/
+
+mytournaments/static/img/pfp/*
 mytournaments/site.db

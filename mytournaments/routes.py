@@ -85,7 +85,7 @@ def account():
             token = token_hex(8)
             _, extension = os.path.splitext(form.profile_picture.data.filename)
             filename = token + extension
-            path = os.path.join(app.root_path, 'static/img/pfps', filename)
+            path = os.path.join(app.root_path, 'static/img/pfp', filename)
 
             image = Image.open(form.profile_picture.data)
             image.thumbnail((128, 128))
