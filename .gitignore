@@ -1,5 +1,5 @@
 .vscode/
 venv/
 
-src/mytournaments/__pycache__/
-src/mytournaments/site.db
+mytournaments/__pycache__/
+mytournaments/site.db
