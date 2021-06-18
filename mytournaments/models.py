@@ -8,6 +8,8 @@ def load_user(user_id):
 
 
 class User(db.Model, UserMixin):
+    __tablename__ = 'user'
+
     id = db.Column(db.Integer, primary_key=True)
 
     username = db.Column(db.String(20), unique=True, nullable=False)
@@ -22,6 +24,8 @@ class User(db.Model, UserMixin):
 
 
 class Tournament(db.Model):
+    __tablename__ == 'tournament'
+
     id = db.Column(db.Integer, primary_key=True)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
