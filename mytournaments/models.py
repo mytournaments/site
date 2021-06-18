@@ -24,7 +24,7 @@ class User(db.Model, UserMixin):
 
 
 class Tournament(db.Model):
-    __tablename__ == 'tournament'
+    __tablename__ = 'tournament'
 
     id = db.Column(db.Integer, primary_key=True)
 
